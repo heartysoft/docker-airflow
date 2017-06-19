@@ -8,7 +8,7 @@ RUN apk add --update --no-cache gcc g++ python3-dev musl-dev postgresql-dev libx
   && pip3 install --upgrade lxml pip apache-airflow[s3,postgres] circus \
   && rm -rf /var/cache/apk/* \
   && rm -rf /root/.cache \
-  && mkdir /app
+  && mkdir -p /app/airflow/dags
 
 WORKDIR /app
 
@@ -27,5 +27,6 @@ EXPOSE 8080
 
 
 ENV AIRFLOW__CORE__EXECUTOR LocalExecutor
+ENV AIRFLOW_HOME "/app/airflow"
 
 CMD ["./start.sh"]
