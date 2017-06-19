@@ -24,4 +24,8 @@ EXPOSE 8080
 #RUN airflow initdb
 
 #CMD ["circusd", "circus.ini"]
+
+
+ENV AIRFLOW__CORE__EXECUTOR LocalExecutor
+
 CMD ["./start.sh"]

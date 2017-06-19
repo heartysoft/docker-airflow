@@ -1,0 +1,18 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:alpine
+    ports: 
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "pass1234"
+  af:
+    build: ./
+    image: af:local
+    environment:
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:pass1234@postgres:5432/postgres
+    depends_on:
+    - postgres
+    ports:
+    - "8080:8080"
+
