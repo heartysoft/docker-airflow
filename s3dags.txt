@@ -1,0 +1,2 @@
+s3://ihsmarkit-data-lake-config-dev/ecr/
+

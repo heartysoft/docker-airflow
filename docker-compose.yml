@@ -11,8 +11,11 @@ services:
     image: af:local
     environment:
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:pass1234@postgres:5432/postgres
+      FSDAGS: /source-dags/fsdags.txt
     depends_on:
     - postgres
     ports:
     - "8080:8080"
+    volumes:
+    - .:/source-dags
 
