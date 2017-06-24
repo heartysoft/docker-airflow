@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/usr/local/bin/airflow webserver 
+airflow webserver 

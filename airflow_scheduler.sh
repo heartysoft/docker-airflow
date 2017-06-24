@@ -1,4 +1,4 @@
 #!/bin/sh
 
-/usr/local/bin/airflow scheduler -n 1
+airflow scheduler -n 1
 

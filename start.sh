@@ -4,7 +4,7 @@
 n=0
 until [ $n -ge 3 ]
 do
-  /usr/local/bin/airflow initdb && break
+  airflow initdb && break
   n=$((n+1))
   sleep 3
   echo "n is $n ########################"
