@@ -1,0 +1,19 @@
+FROM heartysoft/docker-airflow
+
+ENV KUBE_VERSION=1.6.4 \
+    HELM_VERSION=2.4.2
+
+COPY configure-helm.sh /usr/bin/
+
+RUN apk update \
+ && apk add grep \
+ && mkdir -p /tmp/helm \
+ && curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl \
+ && chmod +x ./kubectl \
+ && mv ./kubectl /usr/bin/kubectl \
+ && curl https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar -xzv -C /tmp/helm \
+ && mv /tmp/helm/linux-amd64/helm /usr/bin/helm \
+ && chmod +x /usr/bin/configure-helm.sh \
+ && rm -rf /tmp/helm \
+ && rm -rf /var/cache/apk/* \
+ && rm -rf /root/.cache
