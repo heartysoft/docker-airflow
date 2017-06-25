@@ -6,7 +6,7 @@ ENV KUBE_VERSION=1.6.4 \
 COPY configure-helm.sh /usr/bin/
 
 RUN apk update \
- && apk add grep \
+ && apk add grep curl \
  && mkdir -p /tmp/helm \
  && curl -LO https://storage.googleapis.com/kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl \
  && chmod +x ./kubectl \
