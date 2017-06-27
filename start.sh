@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export LOGGING_LEVEL=${LOGGING_LEVEL:-WARN}
+sed -i "s/LOGGING_LEVEL =.*$/LOGGING_LEVEL = logging.$LOGGING_LEVEL/g" /opt/conda/lib/python3.6/site-packages/airflow/settings.py 
 
 n=0
 until [ $n -ge 3 ]

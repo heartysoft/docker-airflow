@@ -7,11 +7,14 @@ services:
     environment:
       POSTGRES_PASSWORD: "pass1234"
   af:
-    build: ./
+    build:
+      context: ./
+      dockerfile: Dockerfile
     image: af:local
     environment:
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:pass1234@postgres:5432/postgres
       FSDAGS: /source-dags/fsdags.txt
+      LOGGING_LEVEL: "INFO"
     depends_on:
     - postgres
     ports:
