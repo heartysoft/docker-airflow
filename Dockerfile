@@ -13,7 +13,7 @@ RUN apk add --update --no-cache gcc g++ libstdc++ coreutils linux-headers bash \
  && mkdir -p /app/airflow/dags \
  && chmod a+x *.sh  \
  && sed -i 's/LOGGING_LEVEL =.*$/LOGGING_LEVEL = logging.WARN/g' /opt/conda/lib/python3.6/site-packages/airflow/settings.py \
- && sed -i 's/BASE_LOG_URL =.*$/BASE_LOG_URL = \/app\/airflow\/logs/g' /opt/conda/lib/python3.6/site-packages/airflow/settings.py \
+ && sed -i 's/BASE_LOG_URL =.*$/BASE_LOG_URL = "\/app\/airflow\/logs"/g' /opt/conda/lib/python3.6/site-packages/airflow/settings.py \
  && sed -i '/print(settings.HEADER)/d' /opt/conda/lib/python3.6/site-packages/airflow/bin/cli.py
 
 EXPOSE 8080
