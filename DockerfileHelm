@@ -17,7 +17,8 @@ RUN apk update \
  && chmod +x /usr/bin/configure-helm.sh \
  && rm -rf /tmp/helm \
  && rm -rf /var/cache/apk/* \
- && rm -rf /root/.cache
+ && rm -rf /root/.cache \
+ && chmod a+x *.sh
 
 CMD ["./start-helm.sh"]
 
