@@ -1,3 +1,3 @@
 #!/bin/sh
 
-airflow webserver 
+airflow webserver -A /dev/null
