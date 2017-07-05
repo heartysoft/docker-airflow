@@ -31,6 +31,7 @@ RUN apk add --update --no-cache gcc g++ libstdc++ coreutils linux-headers bash \
 EXPOSE 8080
 
 ENV AIRFLOW__CORE__EXECUTOR=LocalExecutor \
-    AIRFLOW_HOME="/app/airflow"
+    AIRFLOW_HOME="/app/airflow" \
+    AIRFLOW__CORE__LOAD_EXAMPLES=False
 
 CMD ["./start.sh"]
