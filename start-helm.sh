@@ -1,7 +1,8 @@
 #!/bin/sh
 
-if [ "x$CONFIGURE_HELM" != "x" ]; then
-  /usr/bin/configure-helm.sh
+if [ ! -z x$CONFIGURE_HELM ]; then
+  . /usr/bin/configure-helm.sh
+  configure_helm
 fi
 
 exec ./start.sh
