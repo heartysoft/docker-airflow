@@ -1,9 +1,9 @@
 FROM heartysoft/docker-airflow
 
 ENV KUBE_VERSION=1.6.4 \
-    HELM_VERSION=2.4.2
+    HELM_VERSION=2.4.2 \
+    HSFT_CLOUD_TOOLKIT_VERSION=0.3.0
 
-COPY configure-helm.sh /usr/bin/
 ADD [ "start-helm.sh", "./" ]
 
 RUN apk update \
@@ -14,6 +14,7 @@ RUN apk update \
  && mv ./kubectl /usr/bin/kubectl \
  && curl https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar -xzv -C /tmp/helm \
  && mv /tmp/helm/linux-amd64/helm /usr/bin/helm \
+ && curl https://raw.githubusercontent.com/heartysoft/cloud-toolkit/$HSFT_CLOUD_TOOLKIT_VERSION/helm/configure-helm.sh -o /usr/bin/configure-helm.sh \
  && chmod +x /usr/bin/configure-helm.sh \
  && rm -rf /tmp/helm \
  && rm -rf /var/cache/apk/* \
