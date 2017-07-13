@@ -1,6 +1,7 @@
-FROM frolvlad/alpine-miniconda3
+FROM frolvlad/alpine-miniconda3:python3.5
 
 #lxml pip
+ENV PYTHON_VERSION 3.5
 
 WORKDIR /app
 ADD ["start.sh", "circus.ini", "airflow_scheduler.sh", "airflow_web.sh", "dag-fetcher.sh", "./"]
@@ -12,21 +13,21 @@ RUN apk add --update --no-cache gcc g++ libstdc++ coreutils linux-headers bash \
  && rm -rf /root/.cache \
  && mkdir -p /app/airflow/dags \
  && chmod a+x *.sh  \
- && sed -i 's/BASE_LOG_URL =.*$/BASE_LOG_URL = "\/app\/airflow\/logs"/g' /opt/conda/lib/python3.6/site-packages/airflow/settings.py \
+ && sed -i 's/BASE_LOG_URL =.*$/BASE_LOG_URL = "\/app\/airflow\/logs"/g' /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/settings.py \
  # Fixing deprecation warnings the hard way (don't do this at home)
  #
- && sed -i '/print(settings.HEADER)/d' /opt/conda/lib/python3.6/site-packages/airflow/bin/cli.py \
- && sed -i "s/CsrfProtect/CSRFProtect/g" /opt/conda/lib/python3.6/site-packages/airflow/www/app.py \
+ && sed -i '/print(settings.HEADER)/d' /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/bin/cli.py \
+ && sed -i "s/CsrfProtect/CSRFProtect/g" /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/www/app.py \
  # Flask-caching is compatible with Flask-cache so this should fix the warning
  # without breaking the airflow.
  #
- && sed -i 's/from flask_cache/from flask_caching/g' /opt/conda/lib/python3.6/site-packages/airflow/www/app.py\
+ && sed -i 's/from flask_cache/from flask_caching/g' /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/www/app.py\
  # Fixing flask_wtf.Form and cgi.escape warnings might not be needed but they
  # appear in the logs if you use the webapp.
  #
- && sed -i 's/from flask_wtf import Form/from flask_wtf import FlaskForm/g' /opt/conda/lib/python3.6/site-packages/airflow/www/forms.py \
- && sed -i 's/(Form):/(FlaskForm):/g' /opt/conda/lib/python3.6/site-packages/airflow/www/forms.py \
- && sed -i 's/from cgi import escape/from html import escape/g' /opt/conda/lib/python3.6/site-packages/airflow/www/utils.py
+ && sed -i 's/from flask_wtf import Form/from flask_wtf import FlaskForm/g' /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/www/forms.py \
+ && sed -i 's/(Form):/(FlaskForm):/g' /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/www/forms.py \
+ && sed -i 's/from cgi import escape/from html import escape/g' /opt/conda/lib/python$PYTHON_VERSION/site-packages/airflow/www/utils.py
 
 EXPOSE 8080
 
