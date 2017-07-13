@@ -1,0 +1,17 @@
+FROM heartysoft/docker-airflow
+MAINTAINER Luis Angel Vicente Sanchez "luis@bigcente.ch"
+
+RUN apk add --no-cache openjdk8-jre \
+ && rm -rf /var/cache/apk/*
+
+ENV HADOOP_VERSION=2.7
+ENV SPARK_VERSION=2.1.0
+
+RUN wget https://d3kbcqa49mib13.cloudfront.net/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -P /tmp \
+ && tar -xzf /tmp/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local/ \
+ && chown -R root:root /usr/local/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} \
+ && ln -s /usr/local/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /usr/local/spark \
+ && rm -f /tmp/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+
+ENV PATH $PATH:/usr/local/spark/bin
+ENV SPARK_HOME /usr/local/spark
